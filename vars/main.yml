@@ -1,0 +1,5 @@
+---
+users:
+  - username: healay
+    oh-my-zsh:
+      theme: robbyrussel

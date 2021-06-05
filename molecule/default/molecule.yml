@@ -1,0 +1,17 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint: |
+  set -e
+  yamllint .
+  ansible-lint .
+platforms:
+  - name: test_archpython
+    image: healay/docker-arch-ansible
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

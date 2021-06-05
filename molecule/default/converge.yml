@@ -1,0 +1,36 @@
+---
+- name: Converge
+  hosts: all
+
+  pre_tasks:
+
+    - name: update apt cache
+      apt:
+        update_cache: true
+      when: ansible_os_family == 'Debian'
+
+    - name: create test users
+      become: true
+      user:
+        name: '{{ item }}'
+        home: '/home/{{ item }}'
+        createhome: true
+      with_items:
+        - test_usr1
+        - test_usr2
+        - test_usr3
+        - test_usr4
+        - test_usr5
+
+  roles:
+    - role: ansible-role-ohmyzsh
+      users:
+        - username: test_usr1
+        - username: test_usr2
+          oh_my_zsh:
+            theme: test_theme1
+        - username: test_usr3
+          oh_my_zsh:
+            theme: test_theme2
+            plugins:
+              - test_plugin1

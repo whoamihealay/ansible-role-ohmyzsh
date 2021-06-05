@@ -1,0 +1,56 @@
+---
+- name: Install ZSH Dependencies.
+  become: true
+  package:
+    name:
+      - zsh
+      - git
+    state: present
+
+- name: clone oh-my-zsh github repo
+  become: true
+  become_user: '{{ user.username }}'
+  git:
+    clone: true
+    repo: 'https://github.com/ohmyzsh/ohmyzsh.git'
+    dest: '~{{ user.username }}/.oh-my-zsh'
+    version: master
+  with_items: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: '{{ user.username }}'
+
+- name: Set permssions
+  become: true
+  file:
+    path: '~{{ user.username }}'
+    mode: 'go-w'
+    recurse: true
+  with_items: '{{ users }}'
+  when:
+  loop_control:
+    loop_var: user
+    label: '{{ user.username }}'
+
+- name: set default shell for users
+  become: true
+  user:
+    name: '{{ user.username }}'
+    shell: /bin/zsh
+  with_items: "{{ users }}"
+  loop_control:
+    loop_var: user
+    label: '{{ user.username }}'
+
+- name: write .zshrc for users
+  become: true
+  become_user: '{{ user.username }}'
+  template:
+    src: zshrc.j2
+    dest: '~{{ user.username }}/.zshrc'
+    backup: true
+    mode: '0611'
+  with_items: '{{ users }}'
+  loop_control:
+    loop_var: user
+    label: '{{ user.username }}'
