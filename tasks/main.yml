@@ -27,7 +27,6 @@
     mode: 'go-w'
     recurse: true
   with_items: '{{ users }}'
-  when:
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
