@@ -19,11 +19,9 @@
         - test_usr1
         - test_usr2
         - test_usr3
-        - test_usr4
-        - test_usr5
 
   roles:
-    - role: ansible-role-ohmyzsh
+    - role: healay.ohmyzsh
       users:
         - username: test_usr1
         - username: test_usr2
