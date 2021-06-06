@@ -4,10 +4,15 @@
 
   pre_tasks:
 
-    - name: update apt cache
+    - name: update apt cache.
       apt:
         update_cache: true
       when: ansible_os_family == 'Debian'
+
+    - name: update dnf cache.
+      dnf:
+        update_cache: true
+      when: ansible_distribution == 'Fedora'
 
     - name: create test users
       become: true

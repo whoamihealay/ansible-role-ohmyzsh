@@ -43,9 +43,8 @@ jobs:
           - ubuntu1604
           - debian10
           - debian9
-          - fedora34
+          - fedora33
       fail-fast: false
-            
 
     steps:
       - name: Check out the codebase.
