@@ -23,11 +23,11 @@
 - name: Set permssions
   become: true
   file:
-    path: '~{{ user.username }}'
+    path: '~{{ user.username }}/.oh-my-zsh'
     mode: 'go-w'
     recurse: true
   with_items: '{{ users }}'
-  when: "((user.oh_my_zsh | default({})).install | default(oh_my_zsh_install)) | bool"
+  when: ansible_distribution != 'Ubuntu'
   loop_control:
     loop_var: user
     label: '{{ user.username }}'
